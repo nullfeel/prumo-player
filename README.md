@@ -40,6 +40,16 @@ Download: https://prumo-player.vercel.app
 
 ![Recursos](docs/recursos.png)
 
+### Novidades da 0.8.0
+
+**Ouvir junto**: a mesma fila tocando para todo mundo, cada um no seu PC. Quem criou manda o link e vê quem está ouvindo.
+
+![Ouvir junto](docs/ouvir-junto.png)
+
+| Controle pelo celular | Retrospectiva por período |
+|---|---|
+| <img src="docs/celular.png" width="260" alt="Controle pelo celular"> | <img src="docs/retrospectiva.png" width="520" alt="Retrospectiva: seu melhor mês"> |
+
 ## Arquitetura
 
 ```
