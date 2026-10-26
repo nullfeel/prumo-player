@@ -20,7 +20,7 @@ Download: https://prumo-player.vercel.app
 | Status | Publicado · gratuito · atualização automática |
 | Plataforma | Windows 10 e 11 |
 | Papel | Projeto solo · produto, front-end, back-end nativo, distribuição |
-| Tamanho | ~10 mil linhas de Rust · ~5 mil de Svelte e TypeScript |
+| Tamanho | ~17 mil linhas de Rust · ~7 mil de Svelte e TypeScript |
 | Desenvolvimento | Agentes de IA (Claude Code) · TDD · revisão de código por etapa |
 
 ![Página inicial](docs/inicio.png)
@@ -31,7 +31,10 @@ Download: https://prumo-player.vercel.app
 |---|---|
 | Áudio | FLAC, MP3, AAC, ALAC, Opus, OGG, WAV · gapless · equalizador de 10 bandas · ReplayGain e EBU R128 · escolha de dispositivo |
 | Biblioteca | Varredura de pastas · tags · capas · playlists automáticas · fila salva · contagem de plays |
-| Conteúdo | Letra sincronizada estilo karaokê · biografia do artista · rádio de parecidos |
+| Conteúdo | Letra sincronizada estilo karaokê · biografia do artista · rádio de parecidos · retrospectiva por período |
+| Explorar | Ouvir online o que não está na biblioteca · favoritar e pôr em playlist · álbum inteiro · baixar para o PC |
+| Ouvir junto | Mesma música ao mesmo tempo, cada um no seu PC · fila compartilhada · convite por link · cópia temporária da música rara |
+| Controle pelo celular | Página no navegador do celular, no mesmo Wi-Fi, pelo QR code · tocar, pular, buscar e escolher |
 | Integrações | Last.fm (scrobble e perfil) · Discord Rich Presence · controles de mídia do Windows |
 | Sistema | Bandeja · instância única · atalhos globais · mini players · timer para dormir |
 
@@ -48,13 +51,14 @@ Download: https://prumo-player.vercel.app
    │  App Tauri 2 (Rust)          │  janelas, bandeja, atalhos,
    │                              │  Last.fm, Discord, updater
    └──────┬───────────────┬───────┘
-          │               │
- ┌────────▼─────┐  ┌──────▼────────┐
- │ crate engine │  │ crate library │
- │ decodificação│  │ SQLite, tags, │
- │ saída, EQ,   │  │ capas, busca  │
- │ loudness     │  │               │
+          │               │            ┌─────────────────────┐
+ ┌────────▼─────┐  ┌──────▼────────┐   │ Servidor da sala    │
+ │ crate engine │  │ crate library │   │ (Cloudflare Worker, │
+ │ decodificação│  │ SQLite, tags, │   │ Durable Object)     │
+ │ saída, EQ,   │  │ capas, busca  │   │ só no Ouvir junto   │
+ │ loudness     │  │               │   └─────────────────────┘
  └──────────────┘  └───────────────┘
+   + crates online (busca e streaming) e queue (fila, shuffle, repetição)
 ```
 
 ### Decisões técnicas
@@ -78,6 +82,20 @@ Instalador pequeno e pouca memória: a interface usa o WebView2 que já vem no W
 Cada versão é assinada. O app confere a assinatura antes de instalar e só atualiza quando
 não tem música tocando.
 
+#### Ouvir junto sem transmitir áudio
+
+Ninguém manda o som: a sessão passa só qual música, em que ponto e se está tocando. Cada
+Prumo toca pelo arquivo que tem, senão pela versão online, e acerta a diferença sozinho
+(até ~2 s). O PC de quem criou é a fonte da verdade; um servidor pequeno na Cloudflare
+(um Durable Object por sala, com WebSocket em hibernação) só repassa as mensagens e não
+guarda nada depois. Música que só uma pessoa tem vai como cópia temporária, que some ao
+sair.
+
+#### Controle pelo celular sem app
+
+Servidor HTTP e WebSocket dentro do próprio Prumo, só na rede local, protegido por um
+código que vai no QR code. O celular chama a mesma lógica dos botões do PC.
+
 #### Integração com o sistema
 
 Controles de mídia do Windows (souvlaki), Discord Rich Presence com capa do álbum e
@@ -94,6 +112,7 @@ scrobble no Last.fm.
 | Dados | SQLite (rusqlite) · lofty |
 | Interface | Svelte · TypeScript · Vite |
 | Integrações | Last.fm · Discord · souvlaki |
+| Ouvir junto | Cloudflare Workers · Durable Objects · tungstenite |
 | Site | HTML · CSS · Vercel |
 
 ## Contato
