@@ -5,11 +5,12 @@ Player de música para Windows.
 [![Status](https://img.shields.io/badge/status-publicado-success)](https://prumo-player.vercel.app)
 [![Windows](https://img.shields.io/badge/Windows%2010%20%7C%2011-Tauri%202-blue)](https://prumo-player.vercel.app)
 [![Rust](https://img.shields.io/badge/Rust-Svelte-orange)](https://prumo-player.vercel.app)
+[![Downloads](https://img.shields.io/github/downloads/nullfeel/prumo-player/total?label=downloads)](https://github.com/nullfeel/prumo-player/releases)
 
 Este repositório é um estudo de caso: documenta a arquitetura e as decisões técnicas do Prumo
 Player. O código-fonte é fechado e não está aqui.
 
-Download: https://prumo-player.vercel.app
+Download: https://prumo-player.vercel.app · [todas as versões](https://github.com/nullfeel/prumo-player/releases)
 
 ![Prumo Player](docs/capa.png)
 
@@ -116,6 +117,18 @@ Controles de mídia do Windows (souvlaki), Discord Rich Presence com capa do ál
 scrobble no Last.fm. O botão vago do card do Discord vira um link para baixar o app:
 quem ouve vira divulgação, sem mudar a configuração de quem já usa.
 
+#### Métricas sem rastrear ninguém
+
+Os instaladores ficam nos Releases do GitHub, que contam os downloads. Para saber quantas
+pessoas usam por dia, a checagem de atualização passa pelo mesmo Worker da Cloudflare do
+Ouvir junto: ele conta cada computador uma vez por dia com um hash do IP que é apagado no
+dia seguinte, e devolve o manifesto de atualização. Sem ID, sem SDK de análise.
+
+#### Suporte
+
+No app instalado o stderr vai para um `prumo.log` na pasta de dados, com rotação. Em
+Configurações, "Relatar um problema" abre as Issues e "Mostrar o arquivo de log" mostra o arquivo para anexar.
+
 ![Telas](docs/telas.png)
 
 ## Stack
@@ -133,5 +146,7 @@ quem ouve vira divulgação, sem mudar a configuração de quem já usa.
 ## Contato
 
 Marcos Alan · [GitHub](https://github.com/nullfeel) · [prumo-player.vercel.app](https://prumo-player.vercel.app)
+
+Achou um problema ou tem uma sugestão? [Abra uma issue](https://github.com/nullfeel/prumo-player/issues).
 
 <sub>Código-fonte fechado. Este repositório contém apenas documentação pública do projeto.</sub>
