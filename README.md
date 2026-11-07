@@ -35,14 +35,18 @@ Download: https://prumo-player.vercel.app
 | Explorar | Ouvir online o que não está na biblioteca · favoritar e pôr em playlist · álbum inteiro · baixar para o PC |
 | Ouvir junto | Mesma música ao mesmo tempo, cada um no seu PC · fila compartilhada · convite por link · cópia temporária da música rara |
 | Controle pelo celular | Página no navegador do celular, no mesmo Wi-Fi, pelo QR code · tocar, pular, buscar e escolher |
-| Integrações | Last.fm (scrobble e perfil) · Discord Rich Presence · controles de mídia do Windows |
+| Integrações | Last.fm (scrobble e perfil) · Discord Rich Presence com botão para baixar o app · controles de mídia do Windows |
 | Sistema | Bandeja · instância única · atalhos globais · mini players · timer para dormir |
 
 ![Recursos](docs/recursos.png)
 
-### Novidades da 0.8.0
+### Novidades da 0.8
 
 **Ouvir junto**: a mesma fila tocando para todo mundo, cada um no seu PC. Quem criou manda o link e vê quem está ouvindo.
+Clicar numa música toca ela na hora para todo mundo, com a capa mesmo quando a música vem de outra pessoa.
+
+**Divulgação pelo Discord** (0.8.3): o card do Rich Presence ganha um botão "Baixar o Prumo Player"
+que leva ao site, para quem vê o que você está ouvindo descobrir o app.
 
 ![Ouvir junto](docs/ouvir-junto.png)
 
@@ -109,7 +113,8 @@ código que vai no QR code. O celular chama a mesma lógica dos botões do PC.
 #### Integração com o sistema
 
 Controles de mídia do Windows (souvlaki), Discord Rich Presence com capa do álbum e
-scrobble no Last.fm.
+scrobble no Last.fm. O botão vago do card do Discord vira um link para baixar o app:
+quem ouve vira divulgação, sem mudar a configuração de quem já usa.
 
 ![Telas](docs/telas.png)
 
